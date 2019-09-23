@@ -12,13 +12,8 @@ exports.up = function(knex) {
             tbl
                 .string('password', 128)
                 .notNullable()
-        })
-        .createTable('savedStrains', tbl => {
             tbl
-                .increments()
-            tbl
-                .string('strain')
-                .notNullable()
+                .string('strain', 128)
         })
     )   
 };
