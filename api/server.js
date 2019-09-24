@@ -8,7 +8,7 @@ const authRouter = require('../auth/authRouter');
 const searchRouter = require('../search/searchRouter');
 
 const server = express();
-require('dotenv').config();
+// require('env').config();
 
 const sessionConfig = {
     name: 'user sessions',
