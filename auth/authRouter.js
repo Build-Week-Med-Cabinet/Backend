@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const Users = require('./authModel');
+const authMiddleware = require('./authMiddleware');
 
 router.post('/register', (req, res) => {
     const { username, password } = req.body;
@@ -31,7 +32,7 @@ router.post('/login', (req, res) => {
             res.status(500).json(err)
         })
 })
-router.get('/logout', (req, res) => {
+router.get('/logout', authMiddleware, (req, res) => {
     if (req.session) {
         req.session.destroy(err => {
             if (err) {
