@@ -1,16 +1,44 @@
 const router = require("express").Router();
 const authMiddleware = require('../auth/authMiddleware');
+const Strains = require('./savedStrainsModel');
 
-// get all saved strains for a user route
-router.get("/", authMiddleware, async (req, res) => {
+
+// add a strain
+router.post('/:id/strains', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { index } = req.body;
+        const savedStrainObj = { user_Id: id, strain_Id: index };
+        if (Strains.findRow(savedStrainObj)) {
+            const response = await Strains.add(savedStrainObj);
+            res.send(response);
+        }
+        else {
+            res.status(500).json({ error: "There was an error saving that strain to your favorites." });
+        }
+    } catch (err) {
+        console.log(err);
+    }
 });
 
-// save a strain route
-router.post("/save", authMiddleware, async (req, res) => {
+// get all saved strains for a user
+router.get('/:id/strains', async (req, res) => {
+    const { id } = req.params;
 });
 
-// unsave a strain route
-router.post("/unsave", authMiddleware, async (req, res) => {
+// get a particular saved strain by ID
+router.get('/:id/strains/:strainId', async (req, res) => {
+    const { id, strainId } = req.params;
+});
+
+// // get a particular saved strain by Name
+// router.get('/:id/strains/:strainName', async (req, res) => {
+//     const { id, strainName } = req.params;
+// });
+
+// remove a saved strain
+router.post("/:id/strains/:strainId", (req, res) => {
+    const { id, strainId } = req.params;
 });
 
 
