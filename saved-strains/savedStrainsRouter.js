@@ -7,6 +7,8 @@ const Strains = require('./savedStrainsModel');
 //add documentation
 //deploy db as postgresql   
 //readd protected routes to search and saved
+//give user back their id in login request
+//change db to new db
 
 // add a strain
 // router.post('/:id/strains', async (req, res) => {

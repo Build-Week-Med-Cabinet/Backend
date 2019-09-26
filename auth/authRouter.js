@@ -23,9 +23,9 @@ router.post('/login', (req, res) => {
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 req.session.user = user.username;
-                res.status(200).json({ user: `${user.username}` })
+                res.status(200).json({ user: `${user.username}`, id: `${user.Id}` });
             } else {
-                res.status(400).json({ message: 'Invalid credentials' })
+                res.status(400).json({ message: 'Invalid credentials' });
             }
         })
         .catch(err => {
