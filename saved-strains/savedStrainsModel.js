@@ -13,7 +13,7 @@ function find(user_Id) {
          db('user_strains')
             .where({ user_Id })
             .join('strains', 'user_strains.strain_id', 'strains.id')
-            .select('strain') 
+            .select('strain', 'type', 'rating', 'effects', 'flavor', 'description') // add all strain information
     )      
 }
 function findBy(user_Id, filter) {
@@ -24,16 +24,15 @@ function findBy(user_Id, filter) {
             .where(filter)
             .select('strain')
     )
-}
-function findByStrainId(user_Id, strain_Id) {
+} //fix 
+function findByStrainId(user_Id, Id) {
     return (
         db('user_strains')
-            .where(user_Id)
-            .join('strains', 'user_strains.strain_id', 'strains.id')
-            .where(strain_Id)
-            .select('strain')
+            .where({ user_Id, Id })
+            // .join('strains', 'user_strains.strain_id', 'strains.id')
+            // .select('strain')
     )
-}
+} //fix
 function findRow(row) {
     return (
         db('user_strains')
@@ -51,11 +50,10 @@ function add(row) {
             // })
     )
 }
-function remove(user_Id, strainId) {
+function remove(user_Id, Id) {
     return (
         db('user_strains')
-            .where({ user_Id })
-            .where({ strainId })
+            .where({ user_Id, Id })
             .del()
     )
 }

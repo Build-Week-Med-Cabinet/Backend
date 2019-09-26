@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const authMiddleware = require('../auth/authMiddleware');
 const Strains = require('./savedStrainsModel');
-
+//add middleware for nonexistent routes ie when id's strains don't exist or are empty etc
+//add auth middleware
+//mention discrepancy between strains table id and suggestions ID
+//add documentation
 
 // add a strain
 router.post('/:id/strains', async (req, res) => {
@@ -9,12 +12,12 @@ router.post('/:id/strains', async (req, res) => {
         const { id } = req.params;
         const { index } = req.body;
         const savedStrainObj = { user_Id: id, strain_Id: index };
-        if (Strains.findRow(savedStrainObj)) {
+        if (Strains.findRow(savedStrainObj)) { //fix this since it allows duplicates
             const response = await Strains.add(savedStrainObj);
-            res.send(response);
+            res.status(200).json(response);
         }
         else {
-            res.status(500).json({ message: 'Strain is already saved' });
+            res.status(400).json({ message: 'Strain is already saved' });
         }
     } catch (err) {
         console.log(err);
@@ -25,8 +28,10 @@ router.post('/:id/strains', async (req, res) => {
 router.get('/:id/strains', async (req, res) => {
     try {
         const { id } = req.params;
+        const response = await Strains.find(id);
+        res.status(200).json(response)
     } catch {
-        
+        res.status(400).json({ message: 'error retrieving saved strains' })
     }
 });
 
@@ -34,22 +39,32 @@ router.get('/:id/strains', async (req, res) => {
 router.get('/:id/strains/:strainId', async (req, res) => {
     try {
         const { id, strainId } = req.params;
+        const response = await Strains.findByStrainId(id, strainId);
+        res.status(200).json(response);
     } catch {
-        
+        res.status(400).json({ message: 'error retrieving saved strain' });
     }
-});
+}); //fix 
 
 // // get a particular saved strain by Name
 router.get('/:id/strains/:strainName', async (req, res) => {
-    const { id, strainName } = req.params;
-});
+    try {
+        const { id, strainName } = req.params;
+        const response = await Strains.findBy(id, strainName);
+        res.status(200).json(response)
+    } catch {
+        res.status(400).json({ message: 'error retrieving saved strain' })
+    }
+}); //fix 
 
 // remove a saved strain
-router.post("/:id/strains/:strainId", (req, res) => {
+router.delete("/:id/strains/:strainId", async (req, res) => {
     try {
         const { id, strainId } = req.params;
+        const response = await Strains.remove(id, strainId);
+        res.status(200).json(response)
     } catch {
-
+        res.status(400).json({ message: 'error retrieving saved strain' })
     }
 });
 
