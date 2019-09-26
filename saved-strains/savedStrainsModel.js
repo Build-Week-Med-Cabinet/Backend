@@ -15,7 +15,7 @@ function find(user_Id) {
             .join('strains', 'user_strains.strain_id', 'strains.id')
             .select('strain', 'type', 'rating', 'effects', 'flavor', 'description') // add all strain information
     )      
-}
+} //edit to include savedstrainID in response for frontend
 function findBy(user_Id, filter) {
     return (
         db('user_strains')
