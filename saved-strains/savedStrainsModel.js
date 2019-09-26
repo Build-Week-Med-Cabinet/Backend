@@ -13,7 +13,7 @@ function find(user_Id) {
          db('user_strains')
             .where({ user_Id })
             .join('strains', 'user_strains.strain_id', 'strains.id')
-            .select('strain', 'type', 'rating', 'effects', 'flavor', 'description') // add all strain information
+            .select('user_strains.Id', 'strain', 'type', 'rating', 'effects', 'flavor', 'description') // add all strain information
     )      
 } //edit to include savedstrainID in response for frontend
 function findBy(user_Id, filter) {
@@ -29,17 +29,27 @@ function findByStrainId(user_Id, Id) {
     return (
         db('user_strains')
             .where({ user_Id, Id })
-            // .join('strains', 'user_strains.strain_id', 'strains.id')
-            // .select('strain')
+            .join('strains', 'user_strains.strain_id', 'strains.id')
+            .select('strain')
     )
 } //fix
-function findRow(row) {
+
+
+// function findRow(row) {
+//     return (
+//         db('user_strains')
+//             .where(row.user_Id)
+//             .where(row.strain_Id)
+//     )
+// }
+function findRow(user_Id, strain_Id) {
     return (
         db('user_strains')
-            .where(row.user_Id)
-            .where(row.strain_Id)
+            .where({ user_Id, strain_Id })
     )
 }
+
+
 function add(row) {
     return (
         db('user_strains')

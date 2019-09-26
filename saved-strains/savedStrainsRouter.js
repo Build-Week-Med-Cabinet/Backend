@@ -5,22 +5,51 @@ const Strains = require('./savedStrainsModel');
 //add auth middleware
 //mention discrepancy between strains table id and suggestions ID
 //add documentation
+//deploy db as postgresql   
+//readd protected routes to search and saved
 
 // add a strain
+// router.post('/:id/strains', async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { index } = req.body;
+//         const savedStrainObj = { user_Id: id, strain_Id: index };
+//         if (Strains.findRow(id, index)) { //fix this since it allows duplicates
+//             const response = await Strains.add(savedStrainObj);
+//             res.status(200).json(response);
+//         }
+//         else {
+//             res.status(400).json({ message: 'Strain is already saved' });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//     }
+// });
+
+// router.post('/:id/strains', async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { index } = req.body;
+//         const savedStrainObj = { user_Id: id, strain_Id: index };
+//         console.log(Strains.findRow(savedStrainObj));
+//         const response = await Strains.add(savedStrainObj);
+//         res.status(200).json(response);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(400).json({ message: 'error adding this strain to your favorites'});
+//     }
+// });
 router.post('/:id/strains', async (req, res) => {
     try {
         const { id } = req.params;
         const { index } = req.body;
         const savedStrainObj = { user_Id: id, strain_Id: index };
-        if (Strains.findRow(savedStrainObj)) { //fix this since it allows duplicates
-            const response = await Strains.add(savedStrainObj);
-            res.status(200).json(response);
-        }
-        else {
-            res.status(400).json({ message: 'Strain is already saved' });
-        }
+        console.log(Strains.findRow(id, index));
+        const response = await Strains.add(savedStrainObj);
+        res.status(200).json(response);
     } catch (err) {
         console.log(err);
+        res.status(400).json({ message: 'error adding this strain to your favorites'});
     }
 });
 
