@@ -4,11 +4,10 @@ const Strains = require('./savedStrainsModel');
 //add middleware for nonexistent routes ie when id's strains don't exist or are empty etc
 //add auth middleware
 //mention discrepancy between strains table id and suggestions ID
-//add documentation
+//add documentation/ReadMe File
 //deploy db as postgresql   
 //readd protected routes to search and saved
-//give user back their id in login request
-//change db to new db
+//change db to new updated db
 
 // add a strain
 // router.post('/:id/strains', async (req, res) => {
