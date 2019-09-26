@@ -14,7 +14,7 @@ router.post('/:id/strains', async (req, res) => {
             res.send(response);
         }
         else {
-            res.status(500).json({ error: "There was an error saving that strain to your favorites." });
+            res.status(500).json({ message: 'Strain is already saved' });
         }
     } catch (err) {
         console.log(err);
@@ -23,22 +23,34 @@ router.post('/:id/strains', async (req, res) => {
 
 // get all saved strains for a user
 router.get('/:id/strains', async (req, res) => {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
+    } catch {
+        
+    }
 });
 
 // get a particular saved strain by ID
 router.get('/:id/strains/:strainId', async (req, res) => {
-    const { id, strainId } = req.params;
+    try {
+        const { id, strainId } = req.params;
+    } catch {
+        
+    }
 });
 
 // // get a particular saved strain by Name
-// router.get('/:id/strains/:strainName', async (req, res) => {
-//     const { id, strainName } = req.params;
-// });
+router.get('/:id/strains/:strainName', async (req, res) => {
+    const { id, strainName } = req.params;
+});
 
 // remove a saved strain
 router.post("/:id/strains/:strainId", (req, res) => {
-    const { id, strainId } = req.params;
+    try {
+        const { id, strainId } = req.params;
+    } catch {
+
+    }
 });
 
 
