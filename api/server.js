@@ -6,7 +6,7 @@ const KnexSessionStore = require('connect-session-knex')(session);
 const dbConnection = require('../database/dbConfig');
 const authRouter = require('../auth/authRouter');
 const searchRouter = require('../search/searchRouter');
-const savedStrainsRouter = require('../saved-strains/savedStrainsRouter');
+const usersRouter = require('../saved-strains/savedStrainsRouter');
 
 const server = express();
 
@@ -36,6 +36,6 @@ server.use(session(sessionConfig));
 
 server.use('/api/auth', authRouter);
 server.use('/api/search', searchRouter);
-server.use('api/user/strains', savedStrainsRouter);
+server.use('/api/users', usersRouter);
 
 module.exports = server;
